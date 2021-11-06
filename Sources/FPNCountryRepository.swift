@@ -85,4 +85,14 @@ open class FPNCountryRepository {
 		countries = getAllCountries(excluding: countryCodes)
 	}
 
+	open func setupWithCountriesOnTop( countryCodes: [FPNCountryCode]) {
+        guard self.countries.isEmpty == false else {return}
+        for countryCode in countryCodes.reversed() {
+            if let index = self.countries.firstIndex(where: {$0.code.rawValue == countryCode.rawValue}) {
+                let element = self.countries.remove(at: index)
+                self.countries.insert(element, at: 0)
+            }
+        }
+    }
+
 }
